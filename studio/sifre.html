@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Yeni şifre · Tattoo Studio Books</title>
+<link rel="stylesheet" href="legal.css">
+<style>
+form{display:grid;gap:12px;max-width:380px;margin-top:20px}
+input{font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--ink)}
+button{font:inherit;font-weight:600;padding:12px;border:0;border-radius:10px;background:var(--link);color:#fff;cursor:pointer}
+button:disabled{opacity:.6}
+.msg{margin-top:14px}.err{color:#c0392b}
+</style>
+</head>
+<body>
+<main>
+<h1 id="t">Yeni şifre belirle</h1>
+<p class="muted" id="s">Tattoo Studio Books hesabın için yeni bir şifre yaz.</p>
+<form id="f" hidden>
+  <input id="p1" type="password" autocomplete="new-password" minlength="6" required>
+  <input id="p2" type="password" autocomplete="new-password" minlength="6" required>
+  <button id="b" type="submit">Şifreyi kaydet</button>
+</form>
+<p class="msg" id="m"></p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  var EN=!/^tr/i.test(navigator.language||'');
+  var T=EN?{t:'Set a new password',s:'Enter a new password for your Tattoo Studio Books account.',p1:'New password (at least 6 characters)',p2:'New password again',b:'Save password',
+      bad:'This link is invalid or has expired. Request a new password reset from the app.',mis:'The passwords do not match.',ok:'Your password has been changed. You can now sign in to the app with your new password.',fail:'The password could not be changed. Please try again.'}
+    :{t:'Yeni şifre belirle',s:'Tattoo Studio Books hesabın için yeni bir şifre yaz.',p1:'Yeni şifre (en az 6 karakter)',p2:'Yeni şifre tekrar',b:'Şifreyi kaydet',
+      bad:'Bu bağlantı geçersiz ya da süresi dolmuş. Uygulamadan yeniden şifre sıfırlama iste.',mis:'Şifreler aynı değil.',ok:'Şifren değiştirildi. Artık uygulamaya yeni şifrenle giriş yapabilirsin.',fail:'Şifre değiştirilemedi. Lütfen tekrar dene.'};
+  var $=function(i){return document.getElementById(i)};
+  document.documentElement.lang=EN?'en':'tr';$('t').textContent=T.t;$('s').textContent=T.s;$('p1').placeholder=T.p1;$('p2').placeholder=T.p2;$('b').textContent=T.b;
+  var sb=supabase.createClient('https://kjfhjdfvykdbbndwryak.supabase.co','sb_publishable_YdM51mfMDtgF6LmSjw9rDw_65JnbXL0',{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+  var q=new URLSearchParams(location.search),th=q.get('token_hash'),h=new URLSearchParams(location.hash.replace(/^#/,''));
+  var msg=function(t,e){$('m').textContent=t;$('m').className='msg'+(e?' err':'')};
+  history.replaceState(null,'',location.pathname);
+  var start=th?sb.auth.verifyOtp({token_hash:th,type:'recovery'})
+    :(h.get('access_token')&&h.get('refresh_token')?sb.auth.setSession({access_token:h.get('access_token'),refresh_token:h.get('refresh_token')}):null);
+  if(!start){msg(T.bad,true);return}
+  start.then(function(r){
+    if(r.error){msg(T.bad,true);return}
+    $('f').hidden=false;
+    $('f').addEventListener('submit',function(ev){ev.preventDefault();
+      if($('p1').value!==$('p2').value){msg(T.mis,true);return}
+      $('b').disabled=true;
+      sb.auth.updateUser({password:$('p1').value}).then(function(u){
+        if(u.error){$('b').disabled=false;msg(T.fail,true);return}
+        $('f').hidden=true;msg(T.ok);sb.auth.signOut();
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

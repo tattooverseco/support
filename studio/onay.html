@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Hesap onayı · Tattoo Studio Books</title>
+<link rel="stylesheet" href="legal.css">
+<style>
+form{display:grid;gap:12px;max-width:380px;margin-top:20px}
+input{font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--ink)}
+button{font:inherit;font-weight:600;padding:12px;border:0;border-radius:10px;background:var(--link);color:#fff;cursor:pointer}
+button:disabled{opacity:.6}
+.msg{margin-top:14px}.err{color:#c0392b}
+</style>
+</head>
+<body>
+<main>
+<h1 id="t">Hesap onayı</h1>
+<p id="m">Onaylanıyor…</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  var EN=!/^tr/i.test(navigator.language||'');
+  var T=EN?{t:'Account confirmation',w:'Confirming…',ok:'Your e-mail address is confirmed. Go back to the Tattoo Studio Books app and sign in.',bad:'This link is invalid or has expired. Sign in to the app to request a new one.'}
+    :{t:'Hesap onayı',w:'Onaylanıyor…',ok:'E-posta adresin onaylandı. Tattoo Studio Books uygulamasına dönüp giriş yapabilirsin.',bad:'Bu bağlantı geçersiz ya da süresi dolmuş. Uygulamaya giriş yaparak yenisini isteyebilirsin.'};
+  var $=function(i){return document.getElementById(i)};document.documentElement.lang=EN?'en':'tr';$('t').textContent=T.t;$('m').textContent=T.w;
+  var q=new URLSearchParams(location.search),th=q.get('token_hash'),ty=q.get('type')||'signup';
+  if(!th||!/^(signup|email|email_change|invite)$/.test(ty)){$('m').textContent=T.bad;return}
+  var sb=supabase.createClient('https://kjfhjdfvykdbbndwryak.supabase.co','sb_publishable_YdM51mfMDtgF6LmSjw9rDw_65JnbXL0',{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+  sb.auth.verifyOtp({token_hash:th,type:ty}).then(function(r){$('m').textContent=r.error?T.bad:T.ok;if(!r.error)sb.auth.signOut()});
+})();
+</script>
+</body>
+</html>

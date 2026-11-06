@@ -11,100 +11,112 @@
 <main>
 <p><a href="#en">English below</a></p>
 <h1>Gizlilik Politikası ve KVKK Aydınlatma Metni</h1>
-<p>Son güncelleme: 1 Kasım 2026</p>
+<p>Son güncelleme: 6 Kasım 2026</p>
 
 <p>Bu metin, <strong>Tattoo Studio Books</strong> (Türkiye'de "Dövme Stüdyosu Defteri") mobil uygulamasında kişisel verilerin nasıl işlendiğini açıklar. Uygulama, dövme ve piercing stüdyolarının randevu, müşteri, adisyon, kasa ve personel kayıtlarını tutması için geliştirilmiştir.</p>
 
 <h2>1. Taraflar</h2>
 <p><strong>TattooVerse Co</strong> uygulamanın geliştiricisi ve sağlayıcısıdır. İletişim: <a href="mailto:info@odenaverse.com">info@odenaverse.com</a></p>
-<p>Uygulamaya müşteri ve personel bilgisi giren <strong>stüdyo</strong>, bu bilgiler bakımından KVKK ve GDPR anlamında <strong>veri sorumlusudur</strong>. Müşterilerini bilgilendirmek, gerekli rızaları almak ve bu kayıtları saklamak stüdyonun sorumluluğundadır.</p>
+<p>Hesap sahibi stüdyo, uygulamaya girdiği müşteri ve personel bilgileri bakımından KVKK ve GDPR anlamında <strong>veri sorumlusudur</strong>; TattooVerse Co bu kayıtları stüdyo adına saklayan <strong>veri işleyendir</strong>. Müşterilerini bilgilendirmek ve gerekli rızaları almak stüdyonun sorumluluğundadır. Hesap bilgileri ve abonelik bakımından veri sorumlusu TattooVerse Co'dur.</p>
 
-<h2>2. Veriler nerede saklanır</h2>
-<p>Bu sürümde uygulamaya girilen tüm kayıtlar <strong>yalnızca kullanılan cihazda</strong> saklanır. TattooVerse Co bu kayıtlara erişmez; kayıtlar sunucularımıza gönderilmez. Cihaz silinir, değiştirilir veya uygulama kaldırılırsa kayıtlar kaybolabilir; stüdyo, uygulamadaki "Yedek indir" ile yedek almalıdır.</p>
+<h2>2. Hesap ve veriler nerede saklanır</h2>
+<p>Uygulamayı kullanmak için e-posta ve şifreyle, Apple ile ya da Google ile hesap açılır. Stüdyonun tüm kayıtları bu hesaba bağlı olarak <strong>Supabase</strong> altyapısında, Avrupa'da (Londra, Birleşik Krallık) saklanır ve hesabın açık olduğu cihazlar arasında eşitlenir. Bağlantı şifrelidir (HTTPS); her stüdyo yalnızca kendi kayıtlarına erişebilir.</p>
 
-<h2>3. Uygulamada tutulabilen veriler</h2>
+<h2>3. Uygulamada tutulan veriler</h2>
 <ul>
-<li>Müşteri: ad soyad, telefon, e-posta, doğum tarihi, Instagram adı, notlar, randevu ve ödeme geçmişi</li>
-<li>Sağlık beyanı ve onam formu: müşterinin işaretlediği sağlık bilgileri, onaylar ve parmakla atılan imza (özel nitelikli kişisel veri)</li>
-<li>Fotoğraflar: referans görselleri, işlem sonu fotoğrafları</li>
-<li>Personel: ad soyad, telefon, görev, kazanç oranı, giriş şifresinin şifrelenmiş hali, hakediş ödemeleri</li>
-<li>Stüdyo kasası: tahsilatlar, giderler, ürün satışları</li>
+<li><strong>Hesap:</strong> e-posta adresi, ad (Apple veya Google ile girişte paylaşılırsa), giriş yöntemi.</li>
+<li><strong>Müşteri kayıtları</strong> (stüdyonun girdiği): ad soyad, telefon, e-posta, doğum tarihi, Instagram, notlar, dil tercihi, sağlık beyanı ve imzalı onam formu, randevu ve adisyon bilgileri, stüdyonun eklediği fotoğraflar.</li>
+<li><strong>Personel:</strong> çalışan adı, telefonu, görevi, yetkileri, pay oranları, giriş şifresinin özeti.</li>
+<li><strong>Kasa:</strong> tahsilatlar, giderler, ürün satışları, hakediş ödemeleri.</li>
+<li><strong>Abonelik:</strong> abonelik planı ve durumu (Apple'dan, RevenueCat aracılığıyla). Kart bilgisi uygulamaya ya da bize hiçbir zaman gelmez.</li>
+<li><strong>Teknik:</strong> bildirim için cihaz belirteci (izin verirsen), hata ayıklama için asgari teknik kayıtlar.</li>
 </ul>
-<p>Sağlık bilgileri yalnızca işlemin güvenli yapılması amacıyla ve müşterinin açık rızasıyla tutulmalıdır. Uygulamadaki onam formu bu rızayı almak için hazırlanmıştır.</p>
+<p>Sağlık beyanı özel nitelikli kişisel veridir; stüdyo yalnızca dövme/piercing işleminin güvenliği için ve müşterinin açık rızasıyla kaydetmelidir.</p>
 
-<h2>4. TattooVerse Co'nun işlediği veriler</h2>
+<h2>4. Amaçlar ve hukuki sebepler</h2>
+<p>Veriler; hesabın açılması ve hizmetin sunulması (sözleşmenin ifası), aboneliğin yönetilmesi, güvenlik ve kötüye kullanımın önlenmesi (meşru menfaat) ile yasal yükümlülükler için işlenir. Reklam, profil çıkarma ya da veri satışı yapılmaz; uygulamada üçüncü taraf reklam veya izleme aracı yoktur.</p>
+
+<h2>5. Hizmet sağlayıcılar (yurt dışı aktarım)</h2>
 <ul>
-<li><strong>Bildirim kimliği:</strong> Uygulamada bildirim altyapısı olarak Google Firebase Cloud Messaging bulunur; bildirim kullanıldığında bir cihaz bildirim kimliği oluşturabilir. Bu kimlik kişiyle ilişkilendirilmez ve reklam/izleme için kullanılmaz.</li>
-<li><strong>Uygulama mağazası verileri:</strong> İndirme ve satın alma bilgilerini Apple ve Google kendi politikalarına göre işler.</li>
+<li><strong>Supabase</strong> (veritabanı, giriş, dosya depolama; sunucular Londra, Birleşik Krallık)</li>
+<li><strong>Apple</strong> (Apple ile giriş, uygulama içi satın alma, bildirimler)</li>
+<li><strong>Google</strong> (Google ile giriş; Firebase Cloud Messaging ile bildirim iletimi)</li>
+<li><strong>RevenueCat</strong> (abonelik durumunun takibi; yalnızca anonim hesap kimliği ve satın alma bilgisi)</li>
 </ul>
-<p>Uygulamada reklam, reklam kimliği veya izleme (tracking) bulunmaz.</p>
+<p>Bu aktarımlar KVKK m.9 ve GDPR kapsamındaki güvencelere (standart sözleşme hükümleri vb.) dayanır.</p>
 
-<h2>5. Paylaşım</h2>
-<p>Kayıtlar, stüdyo kendisi paylaşmadıkça (örneğin WhatsApp ile mesaj göndermek, yedek dosyasını aktarmak veya Excel dökümü almak) kimseyle paylaşılmaz. WhatsApp veya e-posta ile gönderilen mesajlar ilgili hizmetin politikasına tabidir.</p>
+<h2>6. Sesli asistan, kamera ve fotoğraflar</h2>
+<p>Sesli asistan (Türkçe) konuşmanı iPhone'un konuşma tanıma hizmetiyle yazıya çevirir; ses kaydı bizim sunucularımıza gönderilmez. Kamera ve fotoğraf izinleri yalnızca senin seçtiğin görselleri randevuya, adisyona ya da bekleme listesine eklemek için kullanılır.</p>
 
-<h2>6. Personel girişi ve yetkiler</h2>
-<p>Stüdyo, çalışanlarına şifreli giriş ve yetki verebilir. Yetkisi olmayan çalışan stüdyo kasasını, diğer çalışanların oranlarını ve yetkisi dışındaki müşteri bilgilerini göremez. Bu koruma, verilerin bulunduğu cihaz üzerinde çalışır.</p>
+<h2>7. Tattoo Artist Books bağlantısı</h2>
+<p>Stüdyo, kendi sanatçısına bir bağlantı kodu verebilir. Sanatçı bu kodu Tattoo Artist Books uygulamasında girerse, sanatçının stüdyoyla paylaşmayı seçtiği randevu, adisyon ve müşteri bilgileri stüdyonun hesabına gelir; stüdyonun o sanatçıya verdiği randevular sanatçının uygulamasına gider. Bağlantı iki taraftan da istenildiği an kaldırılabilir.</p>
 
-<h2>7. Saklama ve silme</h2>
-<p>Kayıtlar stüdyo silene kadar cihazda kalır. Tek bir müşterinin kaydı müşteri kartından, tüm kayıtlar Ayarlar &gt; "Tüm kayıtları sil" ile silinebilir. Uygulamanın kaldırılması da cihazdaki tüm kayıtları siler.</p>
+<h2>8. Saklama ve silme</h2>
+<p>Kayıtlar hesap açık olduğu sürece saklanır. Tek bir kaydı uygulamadan silebilirsin. <strong>Ayarlar → Hesabımı sil</strong> ile hesabın, tüm kayıtların ve yüklenen dosyalar sunucularımızdan kalıcı olarak silinir; Apple ile giriş yaptıysan Apple'a verilen izin de iptal edilir. Yedekler en geç 30 gün içinde döner. Abonelik Apple tarafından yönetildiği için ayrıca iPhone Ayarlar → Abonelikler'den iptal edilmelidir.</p>
 
-<h2>8. Haklar</h2>
-<p>Müşteriler KVKK madde 11 ve GDPR kapsamındaki haklarını (bilgi alma, düzeltme, silme, itiraz) veri sorumlusu olan stüdyoya karşı kullanır. TattooVerse Co ile ilgili talepler için <a href="mailto:info@odenaverse.com">info@odenaverse.com</a> adresine yazabilirsiniz.</p>
+<h2>9. Haklarınız (KVKK m.11, GDPR)</h2>
+<p>Verilerine erişme, düzeltme, silme, işlemeyi kısıtlama, itiraz ve taşınabilirlik haklarına sahipsin. Stüdyonun müşterisiysen talebini önce ilgili stüdyoya iletmelisin. Bize <a href="mailto:info@odenaverse.com">info@odenaverse.com</a> adresinden ulaşabilirsin; en geç 30 gün içinde yanıt veririz. Kişisel Verileri Koruma Kurulu'na veya kendi ülkendeki denetim makamına şikâyet hakkın saklıdır.</p>
 
-<h2>9. Çocuklar</h2>
-<p>Uygulama 16 yaş altına yönelik değildir. Onam formu, 18 yaş altındaki müşteriler için uyarı verir.</p>
+<h2>10. Çocuklar</h2>
+<p>Uygulama işletmeler içindir ve 18 yaş altı kişilerin kullanımına yönelik değildir.</p>
 
-<h2>10. Değişiklikler</h2>
-<p>Bulut eşitleme ve çoklu cihaz özellikleri eklendiğinde bu metin güncellenecek ve uygulamada bildirilecektir.</p>
+<h2>11. Değişiklikler</h2>
+<p>Bu metni güncelleyebiliriz; önemli değişiklikleri uygulamada duyururuz.</p>
 
 <hr>
-
-<h1 id="en">Privacy Policy</h1>
-<p>Last updated: 1 November 2026</p>
-
-<p>This policy explains how personal data is handled in the <strong>Tattoo Studio Books</strong> mobile app, built for tattoo and piercing studios to keep appointments, clients, invoices, finances and staff records.</p>
+<section id="en">
+<h1>Privacy Policy</h1>
+<p>Last updated: 6 November 2026</p>
+<p>This policy explains how personal data is handled in the <strong>Tattoo Studio Books</strong> mobile app, an appointment, client, invoice, finance and staff app for tattoo and piercing studios.</p>
 
 <h2>1. Who is who</h2>
 <p><strong>TattooVerse Co</strong> develops and provides the app. Contact: <a href="mailto:info@odenaverse.com">info@odenaverse.com</a></p>
-<p>The <strong>studio</strong> that enters client and staff information is the <strong>data controller</strong> for that information under GDPR and Turkish KVKK. The studio is responsible for informing its clients, collecting any required consent and keeping these records.</p>
+<p>The studio that owns the account is the <strong>controller</strong> of the client and staff data it enters; TattooVerse Co stores these records on the studio's behalf as a <strong>processor</strong>. The studio is responsible for informing its clients and obtaining any required consent. TattooVerse Co is the controller for account and subscription data.</p>
 
-<h2>2. Where data is stored</h2>
-<p>In this version, everything entered in the app is stored <strong>only on the device in use</strong>. TattooVerse Co cannot access these records and they are not sent to our servers. If the device is wiped or replaced or the app is removed, records may be lost; studios should use "Download backup".</p>
+<h2>2. Account and where data is stored</h2>
+<p>You create an account with e-mail and password, Sign in with Apple or Google. All studio records are linked to this account, stored on <strong>Supabase</strong> infrastructure in Europe (London, United Kingdom) and synced between the devices signed in to the account. Connections are encrypted (HTTPS) and each studio can only access its own records.</p>
 
-<h2>3. Data the app can hold</h2>
+<h2>3. Data held in the app</h2>
 <ul>
-<li>Clients: name, phone, email, date of birth, Instagram handle, notes, appointment and payment history</li>
-<li>Health declaration and consent form: health items ticked by the client, consents and a finger-drawn signature (special category data)</li>
-<li>Photos: reference images and finished work photos</li>
-<li>Staff: name, phone, role, pay rate, a hashed login PIN, payouts</li>
-<li>Studio finances: payments received, expenses, product sales</li>
+<li><strong>Account:</strong> e-mail address, name (if shared by Apple or Google), sign-in method.</li>
+<li><strong>Client records</strong> (entered by the studio): name, phone, e-mail, date of birth, Instagram, notes, language, health declaration and signed consent form, appointment and invoice details, photos added by the studio.</li>
+<li><strong>Staff:</strong> name, phone, role, permissions, pay rates, a hash of the login PIN.</li>
+<li><strong>Finances:</strong> payments, expenses, product sales, artist payouts.</li>
+<li><strong>Subscription:</strong> plan and status (from Apple, via RevenueCat). Card details never reach the app or us.</li>
+<li><strong>Technical:</strong> a device token for notifications (if you allow them) and minimal technical logs for troubleshooting.</li>
 </ul>
-<p>Health information should only be kept to perform the procedure safely and with the client's explicit consent; the in-app consent form is designed to collect it.</p>
+<p>Health declarations are sensitive data; studios should record them only for the safety of the procedure and with the client's explicit consent.</p>
 
-<h2>4. Data processed by TattooVerse Co</h2>
+<h2>4. Purposes and legal bases</h2>
+<p>We process data to create your account and provide the service (contract), manage subscriptions, keep the service secure and prevent abuse (legitimate interest), and meet legal obligations. There is no advertising, profiling or sale of data, and no third-party advertising or tracking SDKs in the app.</p>
+
+<h2>5. Service providers (international transfers)</h2>
 <ul>
-<li><strong>Notification token:</strong> The app includes Google Firebase Cloud Messaging as its notification service; when notifications are used it may create a device token. It is not linked to a person and is not used for advertising or tracking.</li>
-<li><strong>App store data:</strong> Apple and Google process download and purchase data under their own policies.</li>
+<li><strong>Supabase</strong> (database, authentication, file storage; servers in London, UK)</li>
+<li><strong>Apple</strong> (Sign in with Apple, in-app purchases, notifications)</li>
+<li><strong>Google</strong> (Google sign-in; Firebase Cloud Messaging for notification delivery)</li>
+<li><strong>RevenueCat</strong> (subscription status; only an anonymous account ID and purchase information)</li>
 </ul>
-<p>The app contains no ads, no advertising identifier and no tracking.</p>
+<p>Transfers rely on appropriate safeguards such as standard contractual clauses.</p>
 
-<h2>5. Sharing</h2>
-<p>Records are not shared with anyone unless the studio shares them itself (for example sending a WhatsApp message, moving a backup file or exporting to Excel). Messages sent through WhatsApp or email are subject to those services' policies.</p>
+<h2>6. Voice assistant, camera and photos</h2>
+<p>The voice assistant (Turkish) uses the iPhone's speech recognition to turn your speech into text; audio is not sent to our servers. Camera and photo access is used only to attach images you choose to appointments, invoices or the waitlist.</p>
 
-<h2>6. Staff login and permissions</h2>
-<p>Studios can give staff PIN logins and permissions. Staff without permission cannot see studio finances, other staff's rates or client details outside their access. This protection works on the device that holds the data.</p>
+<h2>7. Tattoo Artist Books link</h2>
+<p>A studio can give one of its artists a link code. If the artist enters it in the Tattoo Artist Books app, the appointments, invoices and client details the artist chooses to share are sent to the studio's account, and appointments the studio gives that artist are sent to the artist's app. Either side can remove the link at any time.</p>
 
-<h2>7. Retention and deletion</h2>
-<p>Records stay on the device until the studio deletes them. A single client can be deleted from the client card, all records via Settings &gt; "Delete all records". Removing the app also deletes all records on the device.</p>
+<h2>8. Retention and deletion</h2>
+<p>Records are kept while the account exists. You can delete single records in the app. <strong>Settings → Delete my account</strong> permanently deletes your account, all records and uploaded files from our servers, and revokes the Sign in with Apple authorization if you used it. Backups roll over within 30 days. Subscriptions are managed by Apple and must also be cancelled in iPhone Settings → Subscriptions.</p>
 
-<h2>8. Your rights</h2>
-<p>Clients exercise their rights (access, correction, deletion, objection) with the studio as data controller. For requests concerning TattooVerse Co, write to <a href="mailto:info@odenaverse.com">info@odenaverse.com</a>.</p>
+<h2>9. Your rights</h2>
+<p>You have the right to access, correct, delete, restrict, object to and port your data. If you are a client of a studio, please contact that studio first. Contact us at <a href="mailto:info@odenaverse.com">info@odenaverse.com</a>; we reply within 30 days. You may also complain to your data protection authority.</p>
 
-<h2>9. Children</h2>
-<p>The app is not intended for users under 16. The consent form warns about clients under 18.</p>
+<h2>10. Children</h2>
+<p>The app is intended for businesses and not for people under 18.</p>
 
-<h2>10. Changes</h2>
-<p>When cloud sync and multi-device features are added, this policy will be updated and the change shown in the app.</p>
+<h2>11. Changes</h2>
+<p>We may update this policy and will announce important changes in the app.</p>
+</section>
 </main>
 </body>
 </html>
