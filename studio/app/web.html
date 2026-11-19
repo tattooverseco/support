@@ -2553,7 +2553,7 @@ const BL={info:null,cloud:null,off:null,ready:!BILL_ON,el:null,hard:false,per:'y
 const NP=()=>window.NATIVE&&window.NATIVE.purchases&&window.NATIVE.purchases.available?window.NATIVE.purchases:null;
 function rcTier(ci){const a=(ci&&ci.entitlements&&ci.entitlements.active)||{};return a[ENT.pro]?'pro':a[ENT.starter]?'starter':null}
 function cloudTier(b){return b&&TRANK[b.tier]&&!(typeof b.expiresAt==='number'&&b.expiresAt<=Date.now())?b.tier:null}
-function tier(){if(!BILL_ON)return 'pro';const a=rcTier(BL.info),b=cloudTier(BL.cloud);return (TRANK[a]||0)>=(TRANK[b]||0)?a:b}
+function tier(){if(!BILL_ON)return 'pro';if(isAdm())return 'pro'; /* yönetici (Odena) ödeme ekranına takılmaz */const a=rcTier(BL.info),b=cloudTier(BL.cloud);return (TRANK[a]||0)>=(TRANK[b]||0)?a:b}
 const isPro=()=>PUBLIC_MODE||tier()==='pro';
 const custLimit=()=>tier()==='pro'?Infinity:(+BILL.starterCustomerLimit||100);
 function canAddCust(){if(S.customers.length<custLimit())return true;paywall({reason:'cust'});return false}
@@ -2599,7 +2599,7 @@ function havPanel(plan,per,price){const H=HAV,ref=havRef(),pl=planName(plan)+' �
     <a class="btn block" href="mailto:${esc(H.mail)}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}">${I.mail||''}Dekontu e-postayla gönder</a>
     <p class="muted" style="margin:0;font-size:12.5px"><span>Dekont adresi:</span> <span data-notr>${esc(H.mail)}</span>. <span>Üyeliğin en geç 1 iş günü içinde açılır.</span></p>
     <button type="button" class="btn ghost block" data-pw="hav-check">Ödememi kontrol et</button></div>`}
-const ADMINS=['dreamertattoostudio@gmail.com','info@odenaverse.com'];
+const ADMINS=['dreamertattoostudio@gmail.com','info@odenaverse.com','odenaverse@gmail.com'];
 const isAdm=()=>CLOUD&&!!(window.FB&&FB.admin)&&ADMINS.includes(String(CL.email||'').toLowerCase());
 async function adminSheet(msg){if(!isAdm())return;let L=[];try{L=await FB.admin.list()}catch(e){msg=msg||('Liste alınamadı: '+(e.message||e.code))}
   const d=ms=>ms?new Date(ms).toLocaleDateString('tr-TR'):'süresiz';
