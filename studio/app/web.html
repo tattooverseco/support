@@ -591,7 +591,7 @@ window.BILLING = {
      Android: aylık temel plandaki "developer determined" teklif (etiket android). */
   exitOffer: { plan: 'starter', offering: 'exit', ios: 'exit20_3m', android: 'exit20' },
   /* Aboneliği bırakırken aylık ödeyene bir kez (yalnızca iOS Promotional Offer): 3 ay %20 */
-  keepOffer: { ios: 'keep20_3m' },
+  keepOffer: { ios: 'keep20_3m', iosPro: 'keep20_3m_pro' },
   trialDays: 14,
   prices: {
     starter: { m: '₺449,99', y: '₺4.499,99' },
@@ -3046,7 +3046,7 @@ const subUrl=()=>(BL.info&&BL.info.managementURL)||(AND_APP?'https://play.google
 function yearlyPct(plan){const t=pwSave(BL.off,plan||tier()||'starter'),m=t.match(/%(\d+)/);return m?+m[1]:0}
 function cancelSheet(){const u=subUrl(),e=activeEnt(),pid=String(e&&e.productIdentifier||''),y=/annual|year/i.test(pid),trial=!!(e&&e.periodType==='TRIAL');let r=null,ko=null,kbusy=false;
   const np=NP(),KO=BILL.keepOffer,store=!!e||!!NP();
-  if(np&&np.keepOffer&&KO&&!y&&!trial&&e&&!S.profile.keepUsed)loadOfferings().then(()=>{const all=[...((BL.off&&BL.off.availablePackages)||[])];const k=all.find(p=>p.product&&p.product.identifier===pid);return k&&np.keepOffer(k,KO.ios)}).then(x=>{if(x&&document.querySelector('.sheet .cx')){ko=x;track('keep_view');draw()}}).catch(()=>{});
+  if(np&&np.keepOffer&&KO&&!y&&!trial&&e&&!S.profile.keepUsed)loadOfferings().then(()=>{const all=[...((BL.off&&BL.off.availablePackages)||[])];const k=all.find(p=>p.product&&p.product.identifier===pid);return k&&np.keepOffer(k,/pro/.test(pid)&&KO.iosPro||KO.ios)}).then(x=>{if(x&&document.querySelector('.sheet .cx')){ko=x;track('keep_view');draw()}}).catch(()=>{});
   const keep=()=>ko?`<div class="pw-card pw-xo" aria-pressed="true" style="gap:8px"><span class="pw-xo-tag" style="font-size:16px;padding:5px 12px">Ayrılmadan önce</span><b style="font-size:18px">3 ay %20 indirimli devam et</b>
       <span><b class="num" data-notr>${esc(ko.price)}</b> <span>/ ay</span> · <span class="muted">3 ay sonra normal fiyat</span></span><span class="muted" style="font-size:13px">İndirim bir sonraki yenilemeden başlar. İstediğin zaman iptal edebilirsin.</span>
       <button class="btn block" data-cx="keep" ${kbusy?'disabled':''}>${kbusy?'İşleniyor…':'İndirimle devam et'}</button></div>`
@@ -5059,7 +5059,13 @@ function openSheet(html){
   const k=html.replace(/\s+/g,' ').slice(0,160),st=sheetEl.dataset.k===k?(sheetEl.querySelector('.sheet')?.scrollTop||0):0;sheetEl.dataset.k=k;
   sheetEl.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">${html.includes('class="grab"')?'':'<div class="grab"></div>'}${html}</div>`;
   if(st)sheetEl.querySelector('.sheet').scrollTop=st;
+  sheetFoot();
 }
+/* uzun pencerelerde en alta "Kapat": çıkmak için en üstteki X'e geri kaydırmak gerekmesin */
+function sheetFoot(){const sh=sheetEl&&sheetEl.querySelector('.sheet');if(!sh||!sh.querySelector('[data-act="close"]')||sh.querySelector('.sheet-foot'))return;
+  const add=()=>{if(!sh.isConnected||sh.querySelector('.sheet-foot'))return;if(sh.scrollHeight<=sh.clientHeight+24)return;
+    const b=document.createElement('button');b.type='button';b.className='btn ghost block sheet-foot';b.dataset.act='close';b.textContent='Kapat';sh.appendChild(b)};
+  add();requestAnimationFrame(add);setTimeout(add,300)}
 function closeSheet(){if(sheetEl){sheetEl.remove();sheetEl=null}ui.confirm=null;CL.openReq=null}
 let tt;function toast(m,force){if(!force&&saveFail&&Date.now()-saveFail<2500)return;let el=document.querySelector('.toast');if(!el){el=document.createElement('div');el.className='toast';el.setAttribute('role','status');document.body.appendChild(el)}el.innerHTML=I.check+esc(m);clearTimeout(tt);tt=setTimeout(()=>el.remove(),force?4500:1800)}
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const lb=document.querySelector('.lightbox')||document.querySelector('.sharebox,.pubform:not(.authbox):not([data-hard])');if(lb){lb.remove();return}if(sheetEl)closeSheet()});
@@ -5497,6 +5503,7 @@ async function publicBoot(){
  * Yalnızca Türkçe arayüzde görünür.
  */
 const VOICE=(()=>{
+const V_SIL=window.__vSil||4000; // konuşma bitti sayılmadan önceki sessizlik (ms); testler kısaltabilir
 const V={active:false,state:'idle',text:'',ctx:null,last:null,undo:null,recent:0,hands:false,keepAwake:false,sid:0,
   timers:{},queue:[],playing:false,engine:null,followCb:null};
 const $=id=>document.getElementById(id);
@@ -5582,18 +5589,23 @@ async function begin(opts={}){
 }
 function listen(opts={}){
   const eng=engine();if(!eng)return;stopAudio();
-  const sid=++listenSid;V.state=opts.wake?'wake':'listening';V.text='';V.heard=0;V.startAt=Date.now();setOrb(V.state);if(!opts.wake&&!opts.cont)setText('');
+  const sid=++listenSid;V.state=opts.wake?'wake':'listening';V.text='';V.base='';V.heard=0;V.startAt=Date.now();setOrb(V.state);if(!opts.wake&&!opts.cont)setText('');
   eng.on(ev=>onEngine(ev));
-  const hints=[...S.customers.filter(custVis).map(c=>c.name),...S.appts.filter(p=>p.quick).map(p=>p.qName),...(S.requests||[]).map(r=>r.name),'Hey Tats','Hey Asistan','Belma'].filter(Boolean).slice(0,100);
-  Promise.resolve(eng.start({lang:'tr-TR',session:sid,hints,onDevice:true})).catch(e=>{V.state='idle';setOrb('idle');card({title:'Dinleme başlatılamadı',note:esc(String(e&&e.message||e))})});
-  clearTimeout(V.timers.silence);V.timers.silence=setInterval(()=>tick(sid),250);
+  startEng(sid);
 }
+function vHints(){return[...S.customers.filter(custVis).map(c=>c.name),...S.appts.filter(p=>p.quick).map(p=>p.qName),...(S.requests||[]).map(r=>r.name),'Hey Tats','Hey Asistan','Belma'].filter(Boolean).slice(0,100)}
+function startEng(sid){const eng=engine();if(!eng)return;
+  Promise.resolve(eng.start({lang:'tr-TR',session:sid,hints:vHints(),onDevice:true})).catch(e=>{V.state='idle';setOrb('idle');card({title:'Dinleme başlatılamadı',note:esc(String(e&&e.message||e))})});
+  clearInterval(V.timers.silence);V.timers.silence=setInterval(()=>tick(sid),250);
+}
+/* tanıyıcı kısa bir duraksamada kendiliğinden biterse (iOS) cümle yarıda kalmasın: söylenen korunur, dinleme sürer */
+function relisten(){if(V.state!=='listening')return;const sid=++listenSid;V.base=V.text;startEng(sid)}
 function tick(sid){
   if(sid!==listenSid)return;const now=Date.now();
   if(V.state==='wake')return; // eller serbest: sürekli dinler
   if(V.state!=='listening')return;
-  // konuşma bitti: 1.4 sn sessizlik -> işle
-  if(V.text&&V.heard&&now-V.heard>1400){finish();return}
+  // konuşma bitti: 4 sn sessizlik -> işle (duraksayarak konuşana zaman tanı)
+  if(V.text&&V.heard&&now-V.heard>V_SIL){finish();return}
   // hiç konuşma yok: 10 sn -> kapat
   if(!V.text&&now-V.startAt>10000){clearInterval(V.timers.silence);endListen();if(V.hands)wakeMode();else close(false)}
 }
@@ -5607,14 +5619,15 @@ function onEngine(ev){
         else say(['uyan_efendim'],()=>listen({}))}
       return}
     if(V.state!=='listening')return;
-    if(t&&t!==V.text){V.text=t;V.heard=Date.now();setText(t);const e=$('vtext');if(e)e.classList.remove('old')}
+    const tt=V.base?(t?V.base+' '+t:V.base):t;
+    if(tt&&tt!==V.text){V.text=tt;const t=tt;V.heard=Date.now();setText(t);const e=$('vtext');if(e)e.classList.remove('old')}
     if(ev.final&&t&&engine().kind==='native'){/* iOS: son sonuç; sessizlik zamanlayıcısı işler */}
   }else if(ev.type==='end'){
-    if(V.state==='listening'&&V.text){finish();return}
+    if(V.state==='listening'&&V.text){if(Date.now()-V.heard<V_SIL){relisten();return}finish();return}
     if(V.state==='wake'&&V.hands){setTimeout(()=>{if(V.hands&&V.state==='wake')listen({wake:true})},300);return}
   }else if(ev.type==='error'){
     if(V.state==='wake'&&V.hands){setTimeout(()=>{if(V.hands&&V.state==='wake')listen({wake:true})},800);return}
-    if(V.state==='listening'&&!V.text){/* sessiz kapanma */}
+    if(V.state==='listening'&&V.text){if(Date.now()-V.heard<V_SIL)relisten();else finish();return}
   }
 }
 function endListen(){clearInterval(V.timers.silence);listenSid++;try{engine()&&engine().stop()}catch(_){};if(V.state!=='wake')V.state='idle'}
